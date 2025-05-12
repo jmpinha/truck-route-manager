@@ -1,0 +1,7 @@
+{
+  "name": "truck-route-manager",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
