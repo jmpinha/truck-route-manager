@@ -1,0 +1,76 @@
+// Card styles
+ion-card {
+  margin: 0;
+  box-shadow: none;
+  background: var(--ion-card-background, var(--ion-item-background, var(--ion-background-color, #fff)));
+}
+
+// Badge styles
+ion-badge {
+  padding: 8px;
+  border-radius: 4px;
+  margin-right: 8px;
+}
+
+// Grid spacing
+ion-grid {
+  padding: 0;
+}
+
+ion-row {
+  margin-bottom: 8px;
+}
+
+// Icon styling in the list
+ion-icon {
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+// Status segment styling
+ion-segment {
+  padding: 5px;
+}
+
+// Empty state styling
+.empty-state {
+  text-align: center;
+  padding: 20px;
+  
+  ion-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+  }
+}
+
+// List item styling
+ion-item {
+  --padding-start: 0;
+  --padding-end: 0;
+  --inner-padding-end: 0;
+  
+  &:last-child {
+    --border-width: 0;
+  }
+}
+
+// Card content text
+ion-card-content {
+  p {
+    margin: 4px 0;
+    display: flex;
+    align-items: center;
+  }
+}
+
+// Card title
+ion-card-title {
+  font-size: 1.1em;
+  margin: 8px 0;
+}
+
+// Card subtitle
+ion-card-subtitle {
+  margin-bottom: 8px;
+}
+

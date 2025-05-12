@@ -1,0 +1,293 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Driver Profile</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="editProfile()">
+        <ion-icon [name]="isEditing ? 'checkmark-outline' : 'create-outline'"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="segment" color="primary">
+      <ion-segment-button value="details">
+        <ion-label>Details</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="stats">
+        <ion-label>Statistics</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="activity">
+        <ion-label>Activity</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" *ngIf="driver">
+  <!-- Profile Header -->
+  <div class="profile-header">
+    <div class="avatar-container">
+      <!-- <ion-avatar class="profile-avatar">
+        <img [src]="driver.profileImage" alt="Profile" onerror="this.src='assets/avatar-placeholder.png'">
+      </ion-avatar> -->
+      <div class="edit-avatar" *ngIf="isEditing">
+        <ion-icon name="camera"></ion-icon>
+      </div>
+    </div>
+    <h1>{{ driver.firstName }} {{ driver.lastName }}</h1>
+    <p class="driver-id">Driver ID: {{ driver.id }}</p>
+    <p class="join-date">Driver since {{ driver.joinDate | date:'mediumDate' }}</p>
+  </div>
+
+  <!-- Driver Details Section -->
+  <div [ngSwitch]="segment">
+    <div *ngSwitchCase="'details'">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Personal Information</ion-card-title>
+          <ion-button fill="clear" size="small" (click)="updateContactInfo()" *ngIf="isEditing" slot="end">
+            Edit
+          </ion-button>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list lines="none">
+            <ion-item>
+              <ion-icon name="call-outline" slot="start" color="primary"></ion-icon>
+              <ion-label>
+                <h3>Phone</h3>
+                <p>{{ driver.phone }}</p>
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-icon name="mail-outline" slot="start" color="primary"></ion-icon>
+              <ion-label>
+                <h3>Email</h3>
+                <p>{{ driver.email }}</p>
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-icon name="home-outline" slot="start" color="primary"></ion-icon>
+              <ion-label>
+                <h3>Address</h3>
+                <p>{{ driver.address }}</p>
+                <p>{{ driver.city }}, {{ driver.country }}</p>
+              </ion-label>
+            </ion-item>
+            <ion-item-divider></ion-item-divider>
+            <ion-item>
+              <ion-icon name="alert-circle-outline" slot="start" color="danger"></ion-icon>
+              <ion-label>
+                <h3>Emergency Contact</h3>
+                <p>{{ driver.emergencyContact }}</p>
+                <p>{{ driver.emergencyPhone }}</p>
+              </ion-label>
+              <ion-button fill="clear" size="small" (click)="updateEmergencyContact()" *ngIf="isEditing" slot="end">
+                Edit
+              </ion-button>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>License Information</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list lines="none">
+            <ion-item>
+              <ion-icon name="id-card-outline" slot="start" color="secondary"></ion-icon>
+              <ion-label>
+                <h3>License Number</h3>
+                <p>{{ driver.licenseNumber }}</p>
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-icon name="car-outline" slot="start" color="secondary"></ion-icon>
+              <ion-label>
+                <h3>License Type</h3>
+                <p>{{ driver.licenseType }}</p>
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-icon name="calendar-outline" slot="start" color="secondary"></ion-icon>
+              <ion-label>
+                <h3>Expiry Date</h3>
+                <p>{{ driver.licenseExpiryDate | date:'longDate' }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Vehicle Information</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list lines="none">
+            <ion-item>
+              <ion-icon name="car-sport-outline" slot="start" color="tertiary"></ion-icon>
+              <ion-label>
+                <h3>Vehicle Model</h3>
+                <p>{{ driver.vehicleModel }}</p>
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-icon name="barcode-outline" slot="start" color="tertiary"></ion-icon>
+              <ion-label>
+                <h3>License Plate</h3>
+                <p>{{ driver.vehiclePlate }}</p>
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-icon name="key-outline" slot="start" color="tertiary"></ion-icon>
+              <ion-label>
+                <h3>Vehicle ID</h3>
+                <p>{{ driver.vehicleId }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- Statistics Section -->
+    <div *ngSwitchCase="'stats'" class="stats-container">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Performance Metrics</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="rating-container">
+            <div class="rating-circle">
+              <span class="rating-number">{{ driver.stats.rating }}</span>
+              <span class="rating-label">Rating</span>
+            </div>
+          </div>
+
+          <ion-grid class="stats-grid">
+            <ion-row>
+              <ion-col size="6">
+                <div class="stat-item">
+                  <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
+                  <div class="stat-details">
+                    <span class="stat-value">{{ driver.stats.completedRoutes }}/{{ driver.stats.totalRoutes }}</span>
+                    <span class="stat-label">Routes Completed</span>
+                  </div>
+                </div>
+              </ion-col>
+              <ion-col size="6">
+                <div class="stat-item">
+                  <ion-icon name="time-outline" color="warning"></ion-icon>
+                  <div class="stat-details">
+                    <span class="stat-value">{{ driver.stats.onTimeDeliveryRate }}%</span>
+                    <span class="stat-label">On-Time Delivery</span>
+                  </div>
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="6">
+                <div class="stat-item">
+                  <ion-icon name="speedometer-outline" color="tertiary"></ion-icon>
+                  <div class="stat-details">
+                    <span class="stat-value">{{ driver.stats.totalDistance | number:'1.0-0' }} km</span>
+                    <span class="stat-label">Total Distance</span>
+                  </div>
+                </div>
+              </ion-col>
+              <ion-col size="6">
+                <div class="stat-item">
+                  <ion-icon name="stopwatch-outline" color="medium"></ion-icon>
+                  <div class="stat-details">
+                    <span class="stat-value">{{ driver.stats.totalHours | number:'1.0-0' }} h</span>
+                    <span class="stat-label">Total Hours</span>
+                  </div>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Efficiency Indicators</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="progress-item">
+            <div class="progress-label">
+              <span>Fuel Efficiency</span>
+              <span>{{ driver.stats.fuelEfficiency }}%</span>
+            </div>
+            <ion-progress-bar [value]="driver.stats.fuelEfficiency/100" color="success"></ion-progress-bar>
+          </div>
+
+          <div class="progress-item">
+            <div class="progress-label">
+              <span>On-time Delivery</span>
+              <span>{{ driver.stats.onTimeDeliveryRate }}%</span>
+            </div>
+            <ion-progress-bar [value]="driver.stats.onTimeDeliveryRate/100" color="primary"></ion-progress-bar>
+          </div>
+
+          <div class="progress-item">
+            <div class="progress-label">
+              <span>Routes Completion</span>
+              <span>{{ (driver.stats.completedRoutes / driver.stats.totalRoutes) * 100 | number:'1.0-0' }}%</span>
+            </div>
+            <ion-progress-bar [value]="driver.stats.completedRoutes / driver.stats.totalRoutes" color="tertiary"></ion-progress-bar>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- Activity Section -->
+    <div *ngSwitchCase="'activity'">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Recent Activity</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="timeline">
+            <div class="timeline-item" *ngFor="let activity of driver.recentActivity">
+              <div class="timeline-icon" [ngStyle]="{'background-color': 'var(--ion-color-' + getActivityColor(activity.type) + ')'}">
+                <ion-icon [name]="getActivityIcon(activity.type)" color="light"></ion-icon>
+              </div>
+              <div class="timeline-content">
+                <h3>{{ activity.description }}</h3>
+                <p class="timeline-date">{{ formatDate(activity.date) }}</p>
+                <p *ngIf="activity.details" class="timeline-details">{{ activity.details }}</p>
+              </div>
+            </div>
+
+            <div class="timeline-end">
+              <ion-icon name="ellipsis-vertical-outline" color="medium"></ion-icon>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-tabs>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button tab="dashboard" routerLink="/dashboard">
+          <ion-icon name="home-outline"></ion-icon>
+          <ion-label>Dashboard</ion-label>
+        </ion-tab-button>
+        <ion-tab-button tab="routes" routerLink="/routes">
+          <ion-icon name="map-outline"></ion-icon>
+          <ion-label>Routes</ion-label>
+        </ion-tab-button>
+        <ion-tab-button tab="profile" selected>
+          <ion-icon name="person-outline"></ion-icon>
+          <ion-label>Profile</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-toolbar>
+</ion-footer>

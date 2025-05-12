@@ -1,0 +1,216 @@
+// Profile header styling
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  text-align: center;
+
+  h1 {
+    margin: 10px 0 5px;
+    font-size: 1.5rem;
+  }
+
+  .driver-id, .join-date {
+    margin: 0;
+    color: var(--ion-color-medium);
+    font-size: 0.9rem;
+  }
+}
+
+.avatar-container {
+  position: relative;
+  
+  .profile-avatar {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  
+  .edit-avatar {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background-color: var(--ion-color-primary);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    ion-icon {
+      color: white;
+      font-size: 16px;
+    }
+  }
+}
+
+// Stats section styling
+.stats-container {
+  ion-card {
+    margin-bottom: 16px;
+  }
+}
+
+.rating-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  
+  .rating-circle {
+    background-color: var(--ion-color-primary);
+    color: white;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    .rating-number {
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+    
+    .rating-label {
+      font-size: 0.8rem;
+    }
+  }
+}
+
+.stats-grid {
+  .stat-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    
+    ion-icon {
+      font-size: 24px;
+      margin-right: 12px;
+    }
+    
+    .stat-details {
+      display: flex;
+      flex-direction: column;
+      
+      .stat-value {
+        font-weight: 500;
+        font-size: 1.1rem;
+      }
+      
+      .stat-label {
+        color: var(--ion-color-medium);
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
+
+.progress-item {
+  margin-bottom: 16px;
+  
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+  }
+  
+  ion-progress-bar {
+    height: 8px;
+    border-radius: 4px;
+    --buffer-background: rgba(0, 0, 0, 0.1);
+  }
+}
+
+// Activity timeline styling
+.timeline {
+  position: relative;
+  margin: 0 0 0 20px;
+  padding: 0;
+  
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 2px;
+    background: var(--ion-color-medium-shade);
+  }
+  
+  .timeline-item {
+    position: relative;
+    margin-bottom: 24px;
+  }
+  
+  .timeline-icon {
+    position: absolute;
+    top: 0;
+    left: -28px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--ion-color-primary);
+    z-index: 1;
+    
+    ion-icon {
+      font-size: 16px;
+    }
+  }
+  
+  .timeline-content {
+    position: relative;
+    margin-left: 12px;
+    padding-bottom: 8px;
+    
+    h3 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+    
+    .timeline-date {
+      margin: 4px 0;
+      color: var(--ion-color-medium);
+      font-size: 0.85rem;
+    }
+    
+    .timeline-details {
+      margin: 4px 0 0;
+      color: var(--ion-color-dark);
+      font-size: 0.9rem;
+    }
+  }
+  
+  .timeline-end {
+    display: flex;
+    justify-content: center;
+    color: var(--ion-color-medium);
+    margin-left: -20px;
+  }
+}
+
+// Responsive layout adjustments
+@media (max-width: 576px) {
+  .stats-grid .stat-item {
+    flex-direction: column;
+    align-items: flex-start;
+    
+    ion-icon {
+      margin-bottom: 8px;
+    }
+  }
+}
+

@@ -1,0 +1,17 @@
+.login-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding-top: 10vh;
+}
+
+.validation-error {
+  color: var(--ion-color-danger);
+  font-size: 0.8rem;
+  margin-left: 16px;
+  margin-top: 5px;
+}
+
+ion-card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+

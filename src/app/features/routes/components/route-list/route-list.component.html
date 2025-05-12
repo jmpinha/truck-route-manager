@@ -1,0 +1,107 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>My Routes</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/profile">
+        <ion-icon slot="icon-only" name="person-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="statusFilter" color="primary">
+      <ion-segment-button value="all">
+        <ion-label>All</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="pending">
+        <ion-label>Pending</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="in progress">
+        <ion-label>Active</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="completed">
+        <ion-label>Completed</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item *ngFor="let route of filteredRoutes" 
+              (click)="viewRouteDetails(route.id)"
+              detail="true"
+              lines="full">
+      <ion-card style="width: 100%; margin: 0;">
+        <ion-card-header>
+          <ion-card-subtitle>
+            <ion-badge [color]="getStatusColor(route.status)" style="margin-right: 8px;">
+              {{route.status}}
+            </ion-badge>
+            <ion-badge [color]="getPriorityColor(route.priority)">
+              {{route.priority}} Priority
+            </ion-badge>
+          </ion-card-subtitle>
+          <ion-card-title>{{route.origin}} → {{route.destination}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="6">
+                <ion-text color="medium">
+                  <p><ion-icon name="time-outline"></ion-icon> Start: {{route.startTime | date:'short'}}</p>
+                </ion-text>
+              </ion-col>
+              <ion-col size="6">
+                <ion-text color="medium">
+                  <p><ion-icon name="flag-outline"></ion-icon> ETA: {{route.eta | date:'short'}}</p>
+                </ion-text>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="12">
+                <ion-text color="medium">
+                  <p><ion-icon name="cube-outline"></ion-icon> Cargo: {{route.cargo}}</p>
+                </ion-text>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="12">
+                <ion-text color="medium">
+                  <p><ion-icon name="map-outline"></ion-icon> Distance: {{route.distance}} km</p>
+                </ion-text>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+    </ion-item>
+    
+    <ion-item *ngIf="filteredRoutes.length === 0" lines="none">
+      <ion-label class="ion-text-center">
+        <ion-icon name="alert-circle-outline" color="medium" style="font-size: 48px; margin-top: 20px;"></ion-icon>
+        <p style="margin-top: 10px;">No routes found matching the selected filter.</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-tabs>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button tab="dashboard" routerLink="/dashboard">
+          <ion-icon name="home-outline"></ion-icon>
+          <ion-label>Dashboard</ion-label>
+        </ion-tab-button>
+        <ion-tab-button tab="routes" selected>
+          <ion-icon name="map-outline"></ion-icon>
+          <ion-label>Routes</ion-label>
+        </ion-tab-button>
+        <ion-tab-button tab="profile" routerLink="/profile">
+          <ion-icon name="person-outline"></ion-icon>
+          <ion-label>Profile</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-toolbar>
+</ion-footer>

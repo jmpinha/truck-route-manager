@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Truck Route Manager Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="login-container">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title class="ion-text-center">Driver Login</ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <ion-item>
+            <ion-label position="floating">Email</ion-label>
+            <ion-input type="email" formControlName="email"></ion-input>
+          </ion-item>
+          <div class="validation-error" *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+            <div *ngIf="email?.errors?.['required']">Email is required</div>
+            <div *ngIf="email?.errors?.['email']">Please enter a valid email address</div>
+          </div>
+
+          <ion-item>
+            <ion-label position="floating">Password</ion-label>
+            <ion-input type="password" formControlName="password"></ion-input>
+          </ion-item>
+          <div class="validation-error" *ngIf="password?.invalid && (password?.dirty || password?.touched)">
+            <div *ngIf="password?.errors?.['required']">Password is required</div>
+            <div *ngIf="password?.errors?.['minlength']">Password must be at least 6 characters</div>
+          </div>
+
+          <div class="ion-padding-top">
+            <ion-button expand="block" type="submit" [disabled]="loginForm.invalid || isSubmitting">
+              <span *ngIf="!isSubmitting">Login</span>
+              <ion-spinner name="dots" *ngIf="isSubmitting"></ion-spinner>
+            </ion-button>
+          </div>
+          
+          <div class="ion-text-center ion-padding-top" *ngIf="loginError">
+            <ion-text color="danger">{{ loginError }}</ion-text>
+          </div>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
